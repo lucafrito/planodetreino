@@ -3,144 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Treino ABC - Volta Segura</title>
+    <title>Treino ABC - Interativo</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* ===== ESTILOS GERAIS ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background: #0f0f12;
             color: #e4e4e7;
-            padding: 16px 16px 40px 16px;
+            padding: 16px 16px 100px 16px;
             max-width: 600px;
             margin: 0 auto;
         }
-        h1 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-top: 8px;
-            margin-bottom: 4px;
-            color: #fff;
-        }
+        h1 { font-size: 24px; font-weight: 700; margin-top: 8px; margin-bottom: 4px; color: #fff; }
         .subtitle {
-            font-size: 14px;
-            color: #a1a1aa;
-            margin-bottom: 24px;
-            border-left: 3px solid #a855f7;
-            padding-left: 12px;
-            background: #18181b;
-            border-radius: 0 8px 8px 0;
-            padding: 10px 12px;
+            font-size: 14px; color: #a1a1aa; margin-bottom: 24px;
+            border-left: 3px solid #a855f7; padding-left: 12px;
+            background: #18181b; border-radius: 0 8px 8px 0; padding: 10px 12px;
         }
         .card {
-            background: #18181b;
-            border-radius: 16px;
-            padding: 16px 18px;
-            margin-bottom: 24px;
-            border: 1px solid #27272a;
+            background: #18181b; border-radius: 16px; padding: 16px 18px;
+            margin-bottom: 24px; border: 1px solid #27272a;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
         .card-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 14px;
-            border-bottom: 2px solid #27272a;
-            padding-bottom: 10px;
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 14px; border-bottom: 2px solid #27272a; padding-bottom: 10px;
+            flex-wrap: wrap;
         }
-        .card-header .day {
-            font-weight: 700;
-            font-size: 18px;
-        }
+        .card-header .day { font-weight: 700; font-size: 18px; flex: 1; }
         .card-header .badge {
-            font-size: 12px;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 20px;
-            background: #27272a;
-            color: #a1a1aa;
+            font-size: 12px; font-weight: 600; padding: 4px 10px;
+            border-radius: 20px; background: #27272a; color: #a1a1aa;
         }
         .card-a .card-header { border-bottom-color: #3b82f6; }
         .card-b .card-header { border-bottom-color: #22c55e; }
         .card-c .card-header { border-bottom-color: #f59e0b; }
 
-        .focus {
-            font-size: 13px;
-            color: #a1a1aa;
-            margin-top: -6px;
-            margin-bottom: 12px;
-            font-weight: 400;
-        }
+        .focus { font-size: 13px; color: #a1a1aa; margin-bottom: 12px; font-weight: 400; }
 
         .exercise {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            padding: 10px 0;
-            border-bottom: 1px solid #27272a;
+            display: flex; flex-wrap: wrap; align-items: center;
+            padding: 8px 0; border-bottom: 1px solid #27272a;
+            gap: 4px 0; position: relative;
         }
-        .exercise:last-child {
-            border-bottom: none;
-        }
+        .exercise:last-child { border-bottom: none; }
         .exercise .name {
-            font-size: 15px;
-            font-weight: 500;
-            flex: 2;
+            font-size: 14px; font-weight: 500; flex: 1 1 100%;
+            margin-bottom: 2px; display: flex; align-items: center; gap: 6px;
         }
-        .exercise .sets {
-            font-size: 13px;
-            color: #a1a1aa;
-            margin-right: 12px;
-            text-align: center;
-            min-width: 60px;
+        .exercise .name .edit-btn {
+            background: none; border: none; color: #71717a;
+            font-size: 14px; cursor: pointer; padding: 0 4px;
+        }
+        .exercise .name .edit-btn:hover { color: #a855f7; }
+        .exercise .target {
+            font-size: 12px; color: #71717a; margin-right: 8px;
+            background: #1f1f23; padding: 0 6px; border-radius: 4px;
         }
         .exercise .rest {
-            font-size: 12px;
-            color: #71717a;
-            background: #27272a;
-            padding: 2px 8px;
-            border-radius: 12px;
-            text-align: center;
-            min-width: 45px;
+            font-size: 11px; color: #71717a; background: #27272a;
+            padding: 2px 8px; border-radius: 12px; margin-left: auto;
+            white-space: nowrap;
         }
-        .tip {
-            font-size: 13px;
-            color: #a1a1aa;
-            background: #1f1f23;
-            padding: 8px 12px;
-            border-radius: 8px;
-            margin-top: 12px;
-            border-left: 2px solid #52525b;
+        .input-group { display: flex; align-items: center; gap: 4px; margin-right: 8px; }
+        .input-group input {
+            background: #27272a; border: 1px solid #3f3f46; border-radius: 6px;
+            color: #fff; padding: 4px 6px; width: 48px; font-size: 14px;
+            text-align: center; transition: border 0.2s;
         }
-        .warning-box {
-            background: #2c1818;
-            border: 1px solid #7f1d1d;
-            border-radius: 12px;
-            padding: 14px 16px;
-            margin: 20px 0 12px 0;
+        .input-group input:focus { border-color: #a855f7; outline: none; }
+        .input-group input::placeholder { color: #52525b; font-size: 10px; }
+        .input-group label { font-size: 11px; color: #71717a; font-weight: 400; }
+
+        .btn-icon {
+            background: none; border: none; color: #71717a;
+            font-size: 16px; cursor: pointer; padding: 0 4px;
+            transition: color 0.2s;
         }
-        .warning-box h4 {
-            color: #f87171;
-            margin-bottom: 6px;
+        .btn-icon:hover { color: #f87171; }
+
+        .add-exercise-btn {
+            background: transparent; border: 1px dashed #52525b;
+            border-radius: 12px; color: #a1a1aa; padding: 10px;
+            width: 100%; font-size: 14px; cursor: pointer;
+            margin-top: 8px; transition: all 0.2s;
         }
-        .warning-box p {
-            font-size: 14px;
-            color: #fca5a5;
-            line-height: 1.4;
+        .add-exercise-btn:hover { border-color: #a855f7; color: #a855f7; }
+
+        .tip { font-size: 13px; color: #a1a1aa; background: #1f1f23; padding: 8px 12px; border-radius: 8px; margin-top: 12px; border-left: 2px solid #52525b; clear: both; }
+        .warning-box { background: #2c1818; border: 1px solid #7f1d1d; border-radius: 12px; padding: 14px 16px; margin: 20px 0 12px 0; }
+        .warning-box h4 { color: #f87171; margin-bottom: 6px; }
+        .warning-box p { font-size: 14px; color: #fca5a5; line-height: 1.4; }
+        .footer { text-align: center; font-size: 12px; color: #52525b; margin-top: 20px; border-top: 1px solid #27272a; padding-top: 16px; }
+
+        /* MEDIDAS */
+        .measure-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .measure-grid .full-width { grid-column: 1 / -1; }
+        .measure-grid label { display: flex; flex-direction: column; font-size: 12px; color: #a1a1aa; gap: 4px; }
+        .measure-grid input { background: #27272a; border: 1px solid #3f3f46; border-radius: 8px; color: #fff; padding: 8px 10px; font-size: 14px; width: 100%; }
+        .measure-grid input:focus { border-color: #a855f7; outline: none; }
+        .measure-grid input[type="date"] { color-scheme: dark; }
+        .measure-card .card-header { border-bottom-color: #a855f7; }
+
+        /* BOTÃO WHATSAPP */
+        .whatsapp-fab {
+            position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+            background-color: #25D366; color: #fff; border: none;
+            border-radius: 60px; padding: 14px 28px; font-size: 16px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45); z-index: 999;
+            cursor: pointer; border: 1px solid rgba(255,255,255,0.15);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            max-width: 90%; white-space: nowrap;
         }
-        .footer {
-            text-align: center;
-            font-size: 12px;
-            color: #52525b;
-            margin-top: 20px;
-            border-top: 1px solid #27272a;
-            padding-top: 16px;
+        .whatsapp-fab:active { transform: translateX(-50%) scale(0.95); box-shadow: 0 2px 10px rgba(37,211,102,0.3); }
+        .whatsapp-fab svg { width: 24px; height: 24px; fill: white; flex-shrink: 0; }
+        @media (max-width: 480px) { .whatsapp-fab { font-size: 14px; padding: 12px 18px; gap: 8px; white-space: normal; } .whatsapp-fab svg { width: 20px; height: 20px; } }
+
+        /* TOAST */
+        .toast {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: #22c55e; color: #fff; padding: 10px 20px;
+            border-radius: 30px; font-size: 14px; font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            z-index: 1000; opacity: 0; transition: opacity 0.3s ease;
+            pointer-events: none;
         }
-        .highlight {
-            color: #fbbf24;
+        .toast.show { opacity: 1; }
+        .toast.error { background: #ef4444; }
+
+        /* Modo edição inline */
+        .edit-inline {
+            display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+            background: #1f1f23; padding: 6px 8px; border-radius: 8px; margin: 4px 0;
+            width: 100%;
+        }
+        .edit-inline input, .edit-inline select {
+            background: #27272a; border: 1px solid #3f3f46; border-radius: 6px;
+            color: #fff; padding: 4px 8px; font-size: 13px; flex: 1;
+            min-width: 50px;
+        }
+        .edit-inline .btn-save {
+            background: #a855f7; border: none; color: #fff;
+            padding: 4px 12px; border-radius: 6px; font-weight: 600;
+            cursor: pointer; font-size: 12px;
+        }
+        .edit-inline .btn-cancel {
+            background: #3f3f46; border: none; color: #fff;
+            padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;
         }
     </style>
 </head>
@@ -149,68 +160,36 @@
     <h1>🏋️ Volta Segura</h1>
     <div class="subtitle">
         <strong>Fase 1 – Adaptação (Semanas 1 a 4)</strong><br>
-        3x por semana (Seg, Qua, Sex) ou 4x (Seg, Ter, Qui, Sex) • Treinos de ~50min
+        Clique no ✏️ para editar exercícios ou treinos • <span style="color:#a855f7;">💾 Tudo salvo automaticamente!</span>
     </div>
 
     <!-- REGRA DE OURO -->
     <div class="warning-box">
         <h4>⚠️ Regra de Ouro (1ª e 2ª semana)</h4>
-        <p>Não vá até a falha! Pare <strong>2 repetições antes</strong> de não conseguir fazer mais com boa forma. Ex: se o treino pede 12, pare na 10ª.</p>
+        <p>Não vá até a falha! Pare <strong>2 repetições antes</strong> de não conseguir fazer mais com boa forma.</p>
     </div>
 
-    <!-- CARD A - PUSH -->
-    <div class="card card-a">
+    <!-- MEDIDAS CORPORAIS -->
+    <div class="card measure-card">
         <div class="card-header">
-            <span class="day">🔵 Treino A</span>
-            <span class="badge">Segunda / Quinta</span>
+            <span>📏 Medidas Corporais</span>
+            <span class="badge">Atualize toda semana</span>
         </div>
-        <div class="focus"><strong>Foco:</strong> Peito, Ombros (anterior/lateral) e Tríceps</div>
-        
-        <div class="exercise"><span class="name">1. Supino Reto com Halteres</span><span class="sets">3x 10-12</span><span class="rest">60"</span></div>
-        <div class="exercise"><span class="name">2. Desenvolvimento Ombros (Halter)</span><span class="sets">3x 10-12</span><span class="rest">60"</span></div>
-        <div class="exercise"><span class="name">3. Crucifixo Máquina (Peck Deck)</span><span class="sets">2x 12-15</span><span class="rest">45"</span></div>
-        <div class="exercise"><span class="name">4. Elevação Lateral</span><span class="sets">2x 15</span><span class="rest">45"</span></div>
-        <div class="exercise"><span class="name">5. Tríceps Pulley (Corda)</span><span class="sets">3x 12-15</span><span class="rest">45"</span></div>
-        <div class="exercise"><span class="name">6. Prancha Abdominal</span><span class="sets">3x 30-45s</span><span class="rest">45"</span></div>
-        
-        <div class="tip">💡 Dica: Não desça os halteres além de 90° no supino. No tríceps, mantenha os cotovelos colados no corpo.</div>
+        <div class="measure-grid">
+            <label class="full-width">Data <input type="date" data-key="med_data" id="med_data"></label>
+            <label>Peso (kg) <input type="number" step="0.1" placeholder="75.5" data-key="med_peso"></label>
+            <label>% Gordura <input type="number" step="0.5" placeholder="18" data-key="med_gordura"></label>
+            <label>Peito (cm) <input type="number" step="0.5" placeholder="102" data-key="med_peito"></label>
+            <label>Cintura (cm) <input type="number" step="0.5" placeholder="82" data-key="med_cintura"></label>
+            <label>Braço (cm) <input type="number" step="0.5" placeholder="34" data-key="med_braco"></label>
+            <label>Coxa (cm) <input type="number" step="0.5" placeholder="56" data-key="med_coxa"></label>
+            <label>Quadril (cm) <input type="number" step="0.5" placeholder="96" data-key="med_quadril"></label>
+        </div>
+        <div class="save-indicator" style="text-align:right; font-size:11px; color:#22c55e; margin-top:6px;">✅ Dados salvos localmente</div>
     </div>
 
-    <!-- CARD B - PULL -->
-    <div class="card card-b">
-        <div class="card-header">
-            <span class="day">🟢 Treino B</span>
-            <span class="badge">Quarta / Sexta</span>
-        </div>
-        <div class="focus"><strong>Foco:</strong> Costas, Ombros (posterior) e Bíceps</div>
-        
-        <div class="exercise"><span class="name">1. Puxada Frontal (Polia - aberta)</span><span class="sets">3x 10-12</span><span class="rest">60"</span></div>
-        <div class="exercise"><span class="name">2. Remada Sentada (Polia baixa)</span><span class="sets">3x 10-12</span><span class="rest">60"</span></div>
-        <div class="exercise"><span class="name">3. Remada Serrote (1 braço)</span><span class="sets">2x 10-12 (cada)</span><span class="rest">45"</span></div>
-        <div class="exercise"><span class="name">4. Rosca Direta (Barra W)</span><span class="sets">3x 12-15</span><span class="rest">45"</span></div>
-        <div class="exercise"><span class="name">5. Rosca Martelo (alternada)</span><span class="sets">2x 12-15</span><span class="rest">45"</span></div>
-        <div class="exercise"><span class="name">6. Abdominal Canivete / Polia</span><span class="sets">3x 15-20</span><span class="rest">45"</span></div>
-        
-        <div class="tip">💡 Dica: Na puxada, puxe o cotovelo em direção à costela, não apenas as mãos. Mantenha as costas retas na remada.</div>
-    </div>
-
-    <!-- CARD C - PERNA -->
-    <div class="card card-c">
-        <div class="card-header">
-            <span class="day">🟠 Treino C</span>
-            <span class="badge">Sexta (Dia da Perna)</span>
-        </div>
-        <div class="focus"><strong>Foco:</strong> Quadríceps, Posterior, Glúteos e Panturrilhas</div>
-        
-        <div class="exercise"><span class="name">1. Leg Press 45°</span><span class="sets">4x 10-12</span><span class="rest">90"</span></div>
-        <div class="exercise"><span class="name">2. Cadeira Flexora (Deitado)</span><span class="sets">3x 12-15</span><span class="rest">60"</span></div>
-        <div class="exercise"><span class="name">3. Cadeira Extensora</span><span class="sets">3x 12-15</span><span class="rest">60"</span></div>
-        <div class="exercise"><span class="name">4. Stiff com Halteres</span><span class="sets">3x 10-12</span><span class="rest">60"</span></div>
-        <div class="exercise"><span class="name">5. Panturrilha em Pé</span><span class="sets">4x 15-20</span><span class="rest">45"</span></div>
-        <div class="exercise"><span class="name">6. Ponte Glúteo (no chão)</span><span class="sets">2x 15</span><span class="rest">45"</span></div>
-        
-        <div class="tip">⚠️ <strong>ATENÇÃO PERNA:</strong> NÃO trave os joelhos no Leg Press. Desça o Stiff até a canela com as costas RETAS (não arredonde!).</div>
-    </div>
+    <!-- CONTÊINER DOS TREINOS (gerado por JS) -->
+    <div id="treinosContainer"></div>
 
     <!-- AQUECIMENTO -->
     <div class="card" style="border-left: 4px solid #a855f7;">
@@ -221,21 +200,384 @@
         <p style="font-size:14px; color:#d4d4d8; line-height:1.5;">
             <strong>1. Cardio leve (5 min):</strong> Bicicleta ou elíptica.<br>
             <strong>2. Mobilidade (5 min):</strong> Rotações de ombro, círculos de quadril, agachamento sem peso (15x).<br>
-            <strong>Extra para dia de perna:</strong> Elevação de perna esticada na extensora sem carga (15x cada).
+            <strong>Extra dia de perna:</strong> Elevação de perna esticada na extensora sem carga (15x cada).
         </p>
     </div>
 
     <!-- PROGRESSÃO -->
-    <div style="background: #1a1a2e; border-radius: 12px; padding: 14px 16px; border: 1px solid #2d2d44;">
+    <div style="background: #1a1a2e; border-radius: 12px; padding: 14px 16px; border: 1px solid #2d2d44; margin-bottom:24px;">
         <h4 style="color: #c084fc; margin-bottom: 4px;">📈 Como progredir?</h4>
         <p style="font-size: 13px; color: #a1a1aa; line-height: 1.5;">
-            Conseguiu fazer todas as séries com boa forma? No próximo treino, aumente <strong>2,5 kg</strong> no Leg Press, Supino e Remada. Nos demais, aumente 1 repetição por série (ex: de 12 para 13).
+            Conseguiu executar todas as séries com boa forma? Aumente <strong>2,5 kg</strong> nos principais (Leg Press, Supino, Remada). Nos isoladores, aumente 1 repetição.
         </p>
     </div>
 
-    <div class="footer">
-        Volta com consciência • Respeite os 48h de descanso • Bons treinos! 💪
-    </div>
+    <div class="footer">Volta com consciência • 💾 Dados salvos no navegador</div>
+
+    <!-- BOTÃO WHATSAPP -->
+    <button class="whatsapp-fab" id="whatsappBtn">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        <span>📤 Enviar Anotações</span>
+    </button>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ================================================================
+        // 1. DADOS PADRÃO
+        // ================================================================
+        const DEFAULT_TREINOS = {
+            A: {
+                nome: 'Treino A',
+                foco: 'Superiores - Push (Peito, Ombros, Tríceps)',
+                dias: ['Segunda', 'Quinta'],
+                cor: 'card-a',
+                exercicios: [
+                    { id: 'a1', nome: 'Supino Reto com Halteres', series: 3, repeticoes: '10-12', descanso: '60"', tipo: 'kg' },
+                    { id: 'a2', nome: 'Desenvolv. Ombros (Halter)', series: 3, repeticoes: '10-12', descanso: '60"', tipo: 'kg' },
+                    { id: 'a3', nome: 'Crucifixo Máquina (Peck Deck)', series: 2, repeticoes: '12-15', descanso: '45"', tipo: 'kg' },
+                    { id: 'a4', nome: 'Elevação Lateral', series: 2, repeticoes: '15', descanso: '45"', tipo: 'kg' },
+                    { id: 'a5', nome: 'Tríceps Pulley (Corda)', series: 3, repeticoes: '12-15', descanso: '45"', tipo: 'kg' },
+                    { id: 'a6', nome: 'Prancha Abdominal', series: 3, repeticoes: '30-45s', descanso: '45"', tipo: 'seg' }
+                ]
+            },
+            B: {
+                nome: 'Treino B',
+                foco: 'Superiores - Pull (Costas, Ombros Posteriores, Bíceps)',
+                dias: ['Quarta', 'Sexta'],
+                cor: 'card-b',
+                exercicios: [
+                    { id: 'b1', nome: 'Puxada Frontal (Polia aberta)', series: 3, repeticoes: '10-12', descanso: '60"', tipo: 'kg' },
+                    { id: 'b2', nome: 'Remada Sentada (Polia baixa)', series: 3, repeticoes: '10-12', descanso: '60"', tipo: 'kg' },
+                    { id: 'b3', nome: 'Remada Serrote (1 braço)', series: 2, repeticoes: '10-12 (cada)', descanso: '45"', tipo: 'kg' },
+                    { id: 'b4', nome: 'Rosca Direta (Barra W)', series: 3, repeticoes: '12-15', descanso: '45"', tipo: 'kg' },
+                    { id: 'b5', nome: 'Rosca Martelo (alternada)', series: 2, repeticoes: '12-15', descanso: '45"', tipo: 'kg' },
+                    { id: 'b6', nome: 'Abdominal Canivete / Polia', series: 3, repeticoes: '15-20', descanso: '45"', tipo: 'kg' }
+                ]
+            },
+            C: {
+                nome: 'Treino C',
+                foco: 'Pernas (Quadríceps, Posterior, Glúteos, Panturrilha)',
+                dias: ['Sexta'],
+                cor: 'card-c',
+                exercicios: [
+                    { id: 'c1', nome: 'Leg Press 45°', series: 4, repeticoes: '10-12', descanso: '90"', tipo: 'kg' },
+                    { id: 'c2', nome: 'Cadeira Flexora (Deitado)', series: 3, repeticoes: '12-15', descanso: '60"', tipo: 'kg' },
+                    { id: 'c3', nome: 'Cadeira Extensora', series: 3, repeticoes: '12-15', descanso: '60"', tipo: 'kg' },
+                    { id: 'c4', nome: 'Stiff com Halteres', series: 3, repeticoes: '10-12', descanso: '60"', tipo: 'kg' },
+                    { id: 'c5', nome: 'Panturrilha em Pé', series: 4, repeticoes: '15-20', descanso: '45"', tipo: 'kg' },
+                    { id: 'c6', nome: 'Ponte Glúteo (no chão)', series: 2, repeticoes: '15', descanso: '45"', tipo: 'kg' }
+                ]
+            }
+        };
+
+        // ================================================================
+        // 2. ESTADO GLOBAL
+        // ================================================================
+        let treinosData = {};
+
+        function carregarTreinos() {
+            const saved = localStorage.getItem('treinosData');
+            if (saved) {
+                try {
+                    treinosData = JSON.parse(saved);
+                    // garantir que todos os treinos tenham as propriedades certas
+                    for (let key of ['A','B','C']) {
+                        if (!treinosData[key]) treinosData[key] = JSON.parse(JSON.stringify(DEFAULT_TREINOS[key]));
+                        if (!treinosData[key].exercicios) treinosData[key].exercicios = DEFAULT_TREINOS[key].exercicios.map(e => ({...e}));
+                        // garantir IDs únicos
+                        treinosData[key].exercicios.forEach((ex, idx) => {
+                            if (!ex.id) ex.id = key + '_' + Date.now() + '_' + idx;
+                        });
+                    }
+                } catch (e) {
+                    treinosData = JSON.parse(JSON.stringify(DEFAULT_TREINOS));
+                }
+            } else {
+                treinosData = JSON.parse(JSON.stringify(DEFAULT_TREINOS));
+            }
+            // Salvar imediatamente para garantir consistência
+            salvarTreinos();
+        }
+
+        function salvarTreinos() {
+            localStorage.setItem('treinosData', JSON.stringify(treinosData));
+        }
+
+        // ================================================================
+        // 3. RENDERIZAÇÃO
+        // ================================================================
+        function renderizarTudo() {
+            const container = document.getElementById('treinosContainer');
+            container.innerHTML = '';
+            for (let key of ['A', 'B', 'C']) {
+                const treino = treinosData[key];
+                if (!treino) continue;
+                const card = document.createElement('div');
+                card.className = `card ${treino.cor || 'card-a'}`;
+                card.dataset.treinoKey = key;
+
+                // HEADER
+                const header = document.createElement('div');
+                header.className = 'card-header';
+                header.innerHTML = `
+                    <span class="day">${treino.nome || key}</span>
+                    <span class="badge">${treino.dias ? treino.dias.join(' / ') : ''}</span>
+                    <button class="btn-icon" onclick="editarTreino('${key}')" title="Editar treino">✏️</button>
+                `;
+                card.appendChild(header);
+
+                // FOCO
+                const focus = document.createElement('div');
+                focus.className = 'focus';
+                focus.textContent = `Foco: ${treino.foco || ''}`;
+                card.appendChild(focus);
+
+                // EXERCÍCIOS
+                const exList = document.createElement('div');
+                exList.className = 'exercises-list';
+                treino.exercicios.forEach((ex, idx) => {
+                    const exDiv = document.createElement('div');
+                    exDiv.className = 'exercise';
+                    exDiv.dataset.exId = ex.id;
+
+                    // Nome + botões editar/excluir
+                    const nameDiv = document.createElement('div');
+                    nameDiv.className = 'name';
+                    nameDiv.innerHTML = `
+                        <span>${ex.nome}</span>
+                        <button class="btn-icon" onclick="editarExercicio('${key}','${ex.id}')" title="Editar exercício">✏️</button>
+                        <button class="btn-icon" onclick="removerExercicio('${key}','${ex.id}')" title="Remover exercício">🗑️</button>
+                    `;
+                    exDiv.appendChild(nameDiv);
+
+                    // Target (séries x repetições)
+                    const targetSpan = document.createElement('span');
+                    targetSpan.className = 'target';
+                    targetSpan.textContent = `${ex.series}x ${ex.repeticoes}`;
+                    exDiv.appendChild(targetSpan);
+
+                    // Campos de anotação
+                    const kgKey = `${ex.id}_kg`;
+                    const repKey = ex.tipo === 'seg' ? `${ex.id}_seg` : `${ex.id}_rep`;
+                    const kgInput = document.createElement('div');
+                    kgInput.className = 'input-group';
+                    kgInput.innerHTML = `<label>kg</label><input type="number" step="0.5" placeholder="0" data-key="${kgKey}">`;
+                    exDiv.appendChild(kgInput);
+
+                    const repInput = document.createElement('div');
+                    repInput.className = 'input-group';
+                    const labelRep = ex.tipo === 'seg' ? 'seg' : 'rep';
+                    repInput.innerHTML = `<label>${labelRep}</label><input type="number" step="1" placeholder="0" data-key="${repKey}">`;
+                    exDiv.appendChild(repInput);
+
+                    // Descanso
+                    const restSpan = document.createElement('span');
+                    restSpan.className = 'rest';
+                    restSpan.textContent = ex.descanso || '';
+                    exDiv.appendChild(restSpan);
+
+                    exList.appendChild(exDiv);
+                });
+                card.appendChild(exList);
+
+                // Botão adicionar exercício
+                const addBtn = document.createElement('button');
+                addBtn.className = 'add-exercise-btn';
+                addBtn.textContent = '➕ Adicionar exercício';
+                addBtn.onclick = () => adicionarExercicio(key);
+                card.appendChild(addBtn);
+
+                container.appendChild(card);
+            }
+
+            // Após renderizar, popular os valores das anotações
+            carregarAnotacoes();
+        }
+
+        // ================================================================
+        // 4. CARREGAR ANOTAÇÕES (kg/rep) do localStorage
+        // ================================================================
+        function carregarAnotacoes() {
+            const allInputs = document.querySelectorAll('input[data-key]');
+            allInputs.forEach(input => {
+                const key = input.getAttribute('data-key');
+                const saved = localStorage.getItem(key);
+                if (saved !== null) {
+                    input.value = saved;
+                }
+            });
+            // Data
+            const dataInput = document.getElementById('med_data');
+            if (dataInput && !dataInput.value) {
+                const today = new Date().toISOString().split('T')[0];
+                dataInput.value = today;
+                localStorage.setItem('med_data', today);
+            }
+        }
+
+        // ================================================================
+        // 5. SALVAR ANOTAÇÕES AUTOMATICAMENTE
+        // ================================================================
+        document.addEventListener('input', function(e) {
+            const target = e.target;
+            if (target.hasAttribute('data-key')) {
+                localStorage.setItem(target.getAttribute('data-key'), target.value);
+            }
+        });
+
+        // ================================================================
+        // 6. FUNÇÕES DE EDIÇÃO
+        // ================================================================
+        function editarTreino(key) {
+            const treino = treinosData[key];
+            if (!treino) return;
+            // Abrir um prompt simples (ou poderia ser um modal, mas para mobile prompt é ok)
+            const novoNome = prompt('Novo nome do treino:', treino.nome);
+            if (novoNome !== null && novoNome.trim() !== '') treino.nome = novoNome.trim();
+
+            const novoFoco = prompt('Novo foco do treino:', treino.foco);
+            if (novoFoco !== null) treino.foco = novoFoco.trim();
+
+            const diasAtuais = treino.dias ? treino.dias.join(', ') : '';
+            const novosDias = prompt('Dias da semana (separados por vírgula):', diasAtuais);
+            if (novosDias !== null) {
+                treino.dias = novosDias.split(',').map(d => d.trim()).filter(d => d);
+            }
+
+            salvarTreinos();
+            renderizarTudo();
+            mostrarToast('Treino atualizado!');
+        }
+
+        function editarExercicio(treinoKey, exId) {
+            const treino = treinosData[treinoKey];
+            if (!treino) return;
+            const ex = treino.exercicios.find(e => e.id === exId);
+            if (!ex) return;
+
+            // Usar prompt para edição simples
+            const novoNome = prompt('Nome do exercício:', ex.nome);
+            if (novoNome !== null && novoNome.trim() !== '') ex.nome = novoNome.trim();
+
+            const novasSeries = prompt('Número de séries:', ex.series);
+            if (novasSeries !== null && !isNaN(novasSeries) && Number(novasSeries) > 0) ex.series = Number(novasSeries);
+
+            const novasReps = prompt('Repetições (ex: 10-12 ou 15):', ex.repeticoes);
+            if (novasReps !== null && novasReps.trim() !== '') ex.repeticoes = novasReps.trim();
+
+            const novoDescanso = prompt('Descanso (ex: 60"):', ex.descanso);
+            if (novoDescanso !== null) ex.descanso = novoDescanso.trim();
+
+            // tipo (kg ou seg) - manter o que já está, mas pode oferecer opção
+            const novoTipo = prompt('Tipo de anotação (kg ou seg):', ex.tipo);
+            if (novoTipo !== null && (novoTipo === 'kg' || novoTipo === 'seg')) ex.tipo = novoTipo;
+
+            salvarTreinos();
+            renderizarTudo();
+            mostrarToast('Exercício atualizado!');
+        }
+
+        function removerExercicio(treinoKey, exId) {
+            if (!confirm('Remover este exercício?')) return;
+            const treino = treinosData[treinoKey];
+            if (!treino) return;
+            treino.exercicios = treino.exercicios.filter(e => e.id !== exId);
+            // Remover também as anotações do localStorage (opcional)
+            // Não removemos para não perder histórico, mas podemos deixar.
+            salvarTreinos();
+            renderizarTudo();
+            mostrarToast('Exercício removido!');
+        }
+
+        function adicionarExercicio(treinoKey) {
+            const treino = treinosData[treinoKey];
+            if (!treino) return;
+            const novoId = treinoKey + '_' + Date.now();
+            const novoEx = {
+                id: novoId,
+                nome: 'Novo exercício',
+                series: 3,
+                repeticoes: '10-12',
+                descanso: '60"',
+                tipo: 'kg'
+            };
+            // Perguntar nome para facilitar
+            const nomePrompt = prompt('Nome do novo exercício:', 'Novo exercício');
+            if (nomePrompt !== null && nomePrompt.trim() !== '') novoEx.nome = nomePrompt.trim();
+            else {
+                mostrarToast('Adição cancelada', true);
+                return;
+            }
+            treino.exercicios.push(novoEx);
+            salvarTreinos();
+            renderizarTudo();
+            mostrarToast('Exercício adicionado!');
+        }
+
+        // ================================================================
+        // 7. TOAST
+        // ================================================================
+        function mostrarToast(msg, error = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast' + (error ? ' error' : '');
+            toast.classList.add('show');
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // ================================================================
+        // 8. WHATSAPP (adaptado para os exercícios dinâmicos)
+        // ================================================================
+        function sendToWhatsApp() {
+            let msg = '🏋️ *MEU TREINO - FASE 1 (Adaptação)*\n';
+            const dataMed = localStorage.getItem('med_data') || new Date().toISOString().split('T')[0];
+            msg += `📅 Data: ${dataMed}\n\n`;
+
+            // Medidas
+            const peso = localStorage.getItem('med_peso') || '-';
+            const gordura = localStorage.getItem('med_gordura') || '-';
+            const peito = localStorage.getItem('med_peito') || '-';
+            const cintura = localStorage.getItem('med_cintura') || '-';
+            const braco = localStorage.getItem('med_braco') || '-';
+            const coxa = localStorage.getItem('med_coxa') || '-';
+            const quadril = localStorage.getItem('med_quadril') || '-';
+            msg += '📏 *MEDIDAS CORPORAIS*\n';
+            msg += `Peso: ${peso} kg | %Gordura: ${gordura}\n`;
+            msg += `Peito: ${peito}cm | Cintura: ${cintura}cm\n`;
+            msg += `Braço: ${braco}cm | Coxa: ${coxa}cm | Quadril: ${quadril}cm\n\n`;
+
+            // Exercícios
+            for (let key of ['A','B','C']) {
+                const treino = treinosData[key];
+                if (!treino || !treino.exercicios || treino.exercicios.length === 0) continue;
+                msg += `\n${treino.nome || key} (${treino.foco || ''})\n`;
+                for (let ex of treino.exercicios) {
+                    const kgKey = `${ex.id}_kg`;
+                    const repKey = ex.tipo === 'seg' ? `${ex.id}_seg` : `${ex.id}_rep`;
+                    const kg = localStorage.getItem(kgKey) || '0';
+                    const rep = localStorage.getItem(repKey) || '0';
+                    const unit = ex.tipo === 'seg' ? 'seg' : 'rep';
+                    msg += `${ex.nome}: ${kg} kg x ${rep} ${unit}\n`;
+                }
+            }
+            msg += '\n💾 Salvo do meu diário de treino.';
+            const encoded = encodeURIComponent(msg);
+            window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
+        }
+
+        document.getElementById('whatsappBtn').addEventListener('click', sendToWhatsApp);
+
+        // ================================================================
+        // 9. INICIALIZAÇÃO
+        // ================================================================
+        carregarTreinos();
+        renderizarTudo();
+
+        // Garantir que, se houver mudanças nos inputs, o salvamento já está coberto pelo evento 'input' global
+    </script>
 
 </body>
 </html>
